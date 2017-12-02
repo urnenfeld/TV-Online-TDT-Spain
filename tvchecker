@@ -1,6 +1,6 @@
 #!/bin/sh
 
-status_ok=":green_heart:"
+status_ok=":white_check_mark:"
 status_dead=":red_circle:"
 
 echo "# TV-Online-TDT-Spain
