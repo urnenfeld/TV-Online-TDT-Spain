@@ -1,4 +1,5 @@
 import sys
+import os
 import xbmc
 import xbmcgui
 import xbmcplugin
@@ -15,8 +16,11 @@ thisAddon = xbmcaddon.Addon()
 # Empty strings evaluate to False, but everything else evaluates to True. 
 iconsWanted = thisAddon.getSetting('retrieve_icons') == 'true'
 includeDisabled = thisAddon.getSetting('include_disabled_channels') == 'true'
+
+# Paths
 thisPluginPath=thisAddon.getAddonInfo('path')
-iconsPath=thisPluginPath+'/resources/icons/'
+resourcesPath=os.path.join(thisPluginPath, 'resources')
+iconsPath=os.path.join(resourcesPath, 'icons')
 
 provider = channelproviders.GitHubJSON(includeDisabled)
 # provider = channelproviders.TvOnlineAPP()
@@ -30,7 +34,7 @@ for channel in channelList:
 	if iconsWanted:
 		iconfile = icons.getIcon(channel[0])
 		if iconfile != None:
-			channelListItem.setArt({ 'icon': iconsPath+iconfile, 'poster': iconsPath+iconfile, 'banner' : iconsPath+iconfile })
+			channelListItem.setArt({ 'icon': os.path.join(iconsPath, iconfile), 'poster': os.path.join(iconsPath, iconfile), 'banner' : os.path.join(iconsPath, iconfile) })
 	xbmcplugin.addDirectoryItem(handle=addon_handle, url=channel[1], listitem=channelListItem)
 
 xbmcplugin.endOfDirectory(addon_handle)
